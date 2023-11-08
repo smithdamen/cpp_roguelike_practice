@@ -1,0 +1,33 @@
+Black		2e3440		46, 52, 64
+Gray		3b4252		59, 66, 82
+Red		bf616a		191, 97, 106
+Light Red	d08770		208, 135, 112
+Green		a3be8c		163, 190, 140
+Light Green	78c83c		120, 200, 60
+Yellow 		ebcb8b		235, 203, 139
+Light Yellow	e6be50		230, 190, 80
+Blue 		5e81ac		94, 129, 172
+Light Blue	81a1c1		129, 161, 193
+Magenta		a064aa		160, 100, 170
+Light Magenta 	b48ead		180, 142, 173
+Cyan		8fbcbb		143, 188, 187
+Light Cyan	88c0d0		136, 192, 208
+White		eceff4		236, 239, 244
+Light Gray	d8dee9		216, 222, 233
+
+constexpr auto BLACK = tcod::ColorRGB{46, 52, 64};
+constexpr auto GRAY = tcod::ColorRGB{59, 66, 82};
+constexpr auto RED = tcod::ColorRGB{191, 97, 106};
+constexpr auto LIGHT_RED = tcod::ColorRGB{208, 135, 112};
+constexpr auto GREEN = tcod::ColorRGB{163, 190, 140};
+constexpr auto LIGHT_GREEN = tcod::ColorRGB{120, 200, 60};
+constexpr auto YELLOW = tcod::ColorRGB{235, 203, 139};
+constexpr auto LIGHT_YELLOW = tcod::ColorRGB{230, 190, 80};
+constexpr auto BLUE = tcod::ColorRGB{94, 129, 172};
+constexpr auto LIGHT_BLUE = tcod::ColorRGB{129, 161, 193};
+constexpr auto MAGENTA = tcod::ColorRGB{160, 100, 170};
+constexpr auto LIGHT_MAGENTA = tcod::ColorRGB{180, 142, 173};
+constexpr auto CYAN = tcod::ColorRGB{143, 188, 187};
+constexpr auto LIGHT_CYAN = tcod::ColorRGB{136, 192, 208};
+constexpr auto LIGHT_GRAY = tcod::ColorRGB{216, 222, 233};
+constexpr auto WHITE = tcod::ColorRGB{236, 239, 244};

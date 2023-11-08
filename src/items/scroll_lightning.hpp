@@ -13,7 +13,7 @@
 struct LightningScroll : public Item {
   [[nodiscard]] virtual std::string get_name() const override { return "scroll of lightning bolt"; }
   [[nodiscard]] virtual std::tuple<int, tcod::ColorRGB> get_graphic() const override {
-    return {'#', tcod::ColorRGB{255, 255, 63}};
+    return {'?', constants::SCROLL_LIGHTNING};
   }
   [[nodiscard]] virtual action::Result use_item(World& world, Actor& actor) override {
     Map& map = world.active_map();

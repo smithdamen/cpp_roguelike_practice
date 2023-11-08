@@ -15,8 +15,8 @@ inline void render_map(tcod::Console& console, const Map& map, bool show_all = f
       if (!console.in_bounds({x, y})) continue;
       if (!show_all && !map.explored.at({x, y})) continue;
       console.at({x, y}) = map.tiles.at({x, y}) == Tiles::floor
-                               ? TCOD_ConsoleTile{'.', tcod::ColorRGB{128, 128, 128}, tcod::ColorRGB{0, 0, 0}}
-                               : TCOD_ConsoleTile{'#', tcod::ColorRGB{128, 128, 128}, tcod::ColorRGB{0, 0, 0}};
+                               ? TCOD_ConsoleTile{'.', constants::FLOOR_FG, constants::FLOOR_BG}
+                               : TCOD_ConsoleTile{'#', constants::WALL_FG, constants::WALL_BG};
       if (!map.visible.at({x, y})) {
         console.at({x, y}).fg.r /= 2;
         console.at({x, y}).fg.g /= 2;
@@ -57,7 +57,7 @@ inline void render_map(tcod::Console& console, const World& world) {
     auto& cursor = *g_controller.cursor;
     if (console.in_bounds(cursor) && map.visible.in_bounds(cursor)) {
       auto& cursor_tile = console.at(cursor);
-      cursor_tile = {cursor_tile.ch, tcod::ColorRGB{0, 0, 0}, tcod::ColorRGB{255, 255, 255}};
+      cursor_tile = {cursor_tile.ch, constants::BLACK, constants::WHITE};
     }
   }
 }
@@ -85,16 +85,18 @@ inline void render_log(tcod::Console& console, const World& world) {
   tcod::blit(console, log_console, {log_x, 45});
 }
 
+// TODO: refactor this to fix all the hard coded values for sizes and positions
 inline void draw_bar(
     tcod::Console& console,
     int x,
     int y,
     int width,
+    int height,
     float filled,
     const tcod::ColorRGB fill_color,
     const tcod::ColorRGB back_color,
     std::string_view text = "",
-    const tcod::ColorRGB text_color = constants::WHITE,
+    const tcod::ColorRGB text_color = constants::TEXT_COLOR_DEFAULT,
     TCOD_alignment_t alignment = TCOD_LEFT) {
   const auto bar_width = std::clamp(static_cast<int>(std::round(width * filled)), 0, width);
   tcod::draw_rect(console, {x, y, width, 1}, 0, {}, back_color);
@@ -123,6 +125,8 @@ inline void render_mouse_look(tcod::Console& console, const World& world) {
       cursor_desc.emplace_back(fmt::format("{} ({})", item->get_name(), item->count));
     }
   }*/
+
+  // TODO: figure out if this is the message log and adjust positioning and sizing
   tcod::print_rect(
       console,
       {1, 0, console.get_width() - 1, 1},
@@ -133,23 +137,32 @@ inline void render_mouse_look(tcod::Console& console, const World& world) {
 
 inline void render_gui(tcod::Console& console, const World& world) {
   const auto& player = world.active_player();
-  const int hp_x = 1;
-  const int hp_y = constants::MAP_HEIGHT + 1;
+  const int hp_x = constants::HP_BAR_X;
+  const int hp_y = constants::HP_BAR_Y;
+  const int xp_x = constants::XP_BAR_X;
+  const int xp_y = constants::XP_BAR_Y;
+  const int bar_width = constants::BAR_WIDTH;
+  const int bar_height = constants::BAR_HEIGHT;
 
+  // hp bar
   draw_bar(
       console,
       hp_x,
       hp_y,
-      20,
+      bar_width,
+      bar_height,
       static_cast<float>(player.stats.hp) / player.stats.max_hp,
       constants::HP_BAR_FILL,
       constants::HP_BAR_BACK,
       fmt::format(" HP: {}/{}", player.stats.hp, player.stats.max_hp));
+
+  // experience bar
   draw_bar(
       console,
-      hp_x,
-      hp_y + 1,
-      20,
+      xp_x,
+      xp_y,
+      bar_width,
+      bar_height,
       static_cast<float>(player.stats.xp) / next_level_xp(player.stats.level),
       constants::XP_BAR_FILL,
       constants::XP_BAR_BACK,

@@ -1,6 +1,7 @@
 #pragma once
 #include <fmt/core.h>
 
+#include "constants.hpp"
 #include "items/scroll_confusion.hpp"
 #include "items/scroll_fireball.hpp"
 #include "items/scroll_lightning.hpp"
@@ -12,12 +13,12 @@ inline auto new_world() -> std::unique_ptr<World> {
   auto world = std::make_unique<World>();
   world->rng = std::mt19937(std::random_device{}());
   world->log.append(
-      "Welcome stranger!\nPrepare to perish in the Tombs of the Ancient Kings.", tcod::ColorRGB{212, 106, 106});
+      "Welcome stranger!\nPrepare to perish in the Tombs of the Ancient Kings.", constants::RED);
   auto& player = world->actors.emplace(ActorID{0}, Actor{}).first->second;
   world->active_actors.emplace(ActorID{0});
   player.name = "player";
   player.ch = '@';
-  player.fg = {255, 255, 255};
+  player.fg = constants::WHITE;
   player.stats.max_hp = player.stats.hp = 30;
   player.stats.attack = 5;
   player.stats.defense = 2;

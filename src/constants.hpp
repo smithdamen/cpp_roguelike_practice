@@ -3,19 +3,69 @@
 #include <libtcod/color.hpp>
 
 namespace constants {
+// sizes
 constexpr auto CONSOLE_WIDTH = 80;
 constexpr auto CONSOLE_HEIGHT = 50;
-constexpr auto MAP_WIDTH = 80;
-constexpr auto MAP_HEIGHT = 45;
-constexpr auto TEXT_COLOR_DEFAULT = tcod::ColorRGB{128, 128, 128};
-constexpr auto MENU_COLOR_DEFAULT = TEXT_COLOR_DEFAULT;
-constexpr auto MENU_COLOR_HIGHLIGHT = tcod::ColorRGB{255, 191, 127};
-constexpr auto WHITE = tcod::ColorRGB{255, 255, 255};
+constexpr auto MAP_WIDTH = CONSOLE_WIDTH;
+constexpr auto MAP_HEIGHT = (CONSOLE_HEIGHT - 6);
+constexpr auto BAR_WIDTH = 20;
+constexpr auto BAR_HEIGHT = 3;
+constexpr auto LOG_WIDTH = (CONSOLE_WIDTH - BAR_WIDTH);
+constexpr auto LOG_HEIGHT = (CONSOLE_HEIGHT - MAP_HEIGHT);
+
+// positions
+constexpr auto LOG_X = (CONSOLE_WIDTH - BAR_WIDTH);
+constexpr auto LOG_Y = (CONSOLE_HEIGHT - (CONSOLE_HEIGHT - MAP_HEIGHT));
+constexpr auto HP_BAR_X = 0;
+constexpr auto HP_BAR_Y = LOG_Y;
+constexpr auto XP_BAR_X = 0;
+constexpr auto XP_BAR_Y = (HP_BAR_Y + BAR_HEIGHT);
+
+// colors
+constexpr auto BLACK = tcod::ColorRGB{46, 52, 64};
+constexpr auto GRAY = tcod::ColorRGB{59, 66, 82};
+constexpr auto RED = tcod::ColorRGB{191, 97, 106};
+constexpr auto LIGHT_RED = tcod::ColorRGB{208, 135, 112};
+constexpr auto GREEN = tcod::ColorRGB{163, 190, 140};
+constexpr auto LIGHT_GREEN = tcod::ColorRGB{120, 200, 60};
+constexpr auto YELLOW = tcod::ColorRGB{235, 203, 139};
+constexpr auto LIGHT_YELLOW = tcod::ColorRGB{230, 190, 80};
+constexpr auto BLUE = tcod::ColorRGB{94, 129, 172};
+constexpr auto LIGHT_BLUE = tcod::ColorRGB{129, 161, 193};
+constexpr auto MAGENTA = tcod::ColorRGB{160, 100, 170};
+constexpr auto LIGHT_MAGENTA = tcod::ColorRGB{180, 142, 173};
+constexpr auto CYAN = tcod::ColorRGB{143, 188, 187};
+constexpr auto LIGHT_CYAN = tcod::ColorRGB{136, 192, 208};
+constexpr auto LIGHT_GRAY = tcod::ColorRGB{216, 222, 233};
+constexpr auto WHITE = tcod::ColorRGB{236, 239, 244};
+
+// console colors
+constexpr auto CONSOLE_FOREGROUND = WHITE;
+constexpr auto CONSOLE_BACKGROUND = BLACK;
+
+// menu colors
+constexpr auto TEXT_COLOR_DEFAULT = WHITE;
+constexpr auto MENU_COLOR_DEFAULT = GRAY;
+constexpr auto MENU_COLOR_HIGHLIGHT = YELLOW;
+
+// map colors
+constexpr auto FLOOR_FG = WHITE;
+constexpr auto FLOOR_BG = BLACK;
+constexpr auto WALL_FG = WHITE;
+constexpr auto WALL_BG = BLACK;
+
+// item colors
+constexpr auto HEALING_POTION = GREEN;
+constexpr auto SCROLL_CONFUSION = LIGHT_MAGENTA;
+constexpr auto SCROLL_FIREBALL = RED;
+constexpr auto SCROLL_LIGHTNING = BLUE;
+
+// actor colors
 
 // https://paletton.com/#uid=1000u0kllllaFw0g0qFqFg0w0aF
-constexpr auto HP_BAR_BACK = tcod::ColorRGB{85, 0, 0};
-constexpr auto HP_BAR_FILL = tcod::ColorRGB{128, 21, 21};
+constexpr auto HP_BAR_BACK = RED;
+constexpr auto HP_BAR_FILL = LIGHT_RED;
 // https://paletton.com/#uid=14H0u0knjpZdTAzj6tnqPlGv4gS
-constexpr auto XP_BAR_BACK = tcod::ColorRGB{61, 7, 90};
-constexpr auto XP_BAR_FILL = tcod::ColorRGB{83, 24, 115};
+constexpr auto XP_BAR_BACK = MAGENTA;
+constexpr auto XP_BAR_FILL = LIGHT_MAGENTA;
 }  // namespace constants
