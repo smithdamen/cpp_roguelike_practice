@@ -5,19 +5,20 @@
 namespace constants {
 // sizes
 constexpr auto CONSOLE_WIDTH = 80;
-constexpr auto CONSOLE_HEIGHT = 50;
+constexpr auto CONSOLE_HEIGHT = 40;
 constexpr auto MAP_WIDTH = CONSOLE_WIDTH;
 constexpr auto MAP_HEIGHT = (CONSOLE_HEIGHT - 6);
 constexpr auto BAR_WIDTH = 20;
-constexpr auto BAR_HEIGHT = 3;
+constexpr auto BAR_HEIGHT = 1;
 constexpr auto LOG_WIDTH = (CONSOLE_WIDTH - BAR_WIDTH);
 constexpr auto LOG_HEIGHT = (CONSOLE_HEIGHT - MAP_HEIGHT);
 
 // positions
-constexpr auto LOG_X = (CONSOLE_WIDTH - BAR_WIDTH);
-constexpr auto LOG_Y = (CONSOLE_HEIGHT - (CONSOLE_HEIGHT - MAP_HEIGHT));
+constexpr auto LOG_X = (0 + BAR_WIDTH);
+constexpr auto LOG_Y = (MAP_HEIGHT - 2);
+// constexpr auto LOG_Y = (2 + (CONSOLE_HEIGHT - MAP_HEIGHT));
 constexpr auto HP_BAR_X = 0;
-constexpr auto HP_BAR_Y = LOG_Y;
+constexpr auto HP_BAR_Y = (MAP_HEIGHT);
 constexpr auto XP_BAR_X = 0;
 constexpr auto XP_BAR_Y = (HP_BAR_Y + BAR_HEIGHT);
 

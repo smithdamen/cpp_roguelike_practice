@@ -64,9 +64,16 @@ inline void render_map(tcod::Console& console, const World& world) {
 inline void render_map() { render_map(g_console, *g_world); }
 
 inline void render_log(tcod::Console& console, const World& world) {
-  const int log_x = 22;
-  const int log_width = console.get_width() - log_x;
-  const int log_height = console.get_height() - constants::MAP_HEIGHT;
+  // x and y coordinates of the log console
+  const int log_x = constants::LOG_X;
+  const int log_y = constants::LOG_Y;
+  // width and height of the console log
+  const int log_width = constants::LOG_WIDTH;
+  // const int log_width = console.get_width() - log_x;
+  const int log_height = constants::LOG_HEIGHT;
+  // const int log_height = console.get_height() - constants::MAP_HEIGHT;
+
+  // creates the log console
   tcod::Console log_console{log_width, log_height};
   int y = log_console.get_height();
   for (auto it = world.log.messages.crbegin(); it != world.log.messages.crend(); ++it) {
@@ -82,7 +89,8 @@ inline void render_log(tcod::Console& console, const World& world) {
     }
     if (y < 0) break;
   }
-  tcod::blit(console, log_console, {log_x, 45});
+  // this tells the renderer where to put the log console
+  tcod::blit(console, log_console, {log_x, log_y});
 }
 
 // TODO: refactor this to fix all the hard coded values for sizes and positions
@@ -99,8 +107,8 @@ inline void draw_bar(
     const tcod::ColorRGB text_color = constants::TEXT_COLOR_DEFAULT,
     TCOD_alignment_t alignment = TCOD_LEFT) {
   const auto bar_width = std::clamp(static_cast<int>(std::round(width * filled)), 0, width);
-  tcod::draw_rect(console, {x, y, width, 1}, 0, {}, back_color);
-  tcod::draw_rect(console, {x, y, bar_width, 1}, 0, {}, fill_color);
+  tcod::draw_rect(console, {x, y, width, height}, 0, {}, back_color);
+  tcod::draw_rect(console, {x, y, bar_width, height}, 0, {}, fill_color);
   if (text.size()) tcod::print_rect(console, {x, y, width, 1}, text, text_color, {}, alignment);
 }
 
