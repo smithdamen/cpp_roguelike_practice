@@ -15,12 +15,13 @@ constexpr auto LOG_HEIGHT = (CONSOLE_HEIGHT - MAP_HEIGHT);
 
 // positions
 constexpr auto LOG_X = (0 + BAR_WIDTH);
-constexpr auto LOG_Y = (MAP_HEIGHT - 2);
-// constexpr auto LOG_Y = (2 + (CONSOLE_HEIGHT - MAP_HEIGHT));
+constexpr auto LOG_Y = (MAP_HEIGHT + 1);
 constexpr auto HP_BAR_X = 0;
-constexpr auto HP_BAR_Y = (MAP_HEIGHT);
+constexpr auto HP_BAR_Y = (MAP_HEIGHT + 1);
+constexpr auto MP_BAR_X = 0;
+constexpr auto MP_BAR_Y = (1 + (HP_BAR_Y + BAR_HEIGHT));
 constexpr auto XP_BAR_X = 0;
-constexpr auto XP_BAR_Y = (HP_BAR_Y + BAR_HEIGHT);
+constexpr auto XP_BAR_Y = (1 + (MP_BAR_Y + BAR_HEIGHT));
 
 // colors
 constexpr auto BLACK = tcod::ColorRGB{46, 52, 64};
@@ -62,11 +63,17 @@ constexpr auto SCROLL_FIREBALL = RED;
 constexpr auto SCROLL_LIGHTNING = BLUE;
 
 // actor colors
+constexpr auto PLAYER_FG = WHITE;
 
 // https://paletton.com/#uid=1000u0kllllaFw0g0qFqFg0w0aF
 constexpr auto HP_BAR_BACK = RED;
 constexpr auto HP_BAR_FILL = LIGHT_RED;
+constexpr auto MP_BAR_BACK = BLUE;
+constexpr auto MP_BAR_FILL = LIGHT_BLUE;
 // https://paletton.com/#uid=14H0u0knjpZdTAzj6tnqPlGv4gS
 constexpr auto XP_BAR_BACK = MAGENTA;
 constexpr auto XP_BAR_FILL = LIGHT_MAGENTA;
+
+// tiles
+constexpr auto PLAYER = '@';
 }  // namespace constants

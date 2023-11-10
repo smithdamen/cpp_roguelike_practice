@@ -3,6 +3,7 @@
 #include <gsl/gsl>
 #include <vector>
 
+#include "../colors.hpp"
 #include "../constants.hpp"
 #include "../globals.hpp"
 #include "../types/position.hpp"
@@ -70,7 +71,7 @@ class Menu : public State {
     for (int i{0}; i < static_cast<int>(items_.size()); ++i) {
       const auto& item = items_.at(i);
       const auto is_selected = (i == selected_);
-      const auto fg = is_selected ? constants::MENU_COLOR_HIGHLIGHT : constants::MENU_COLOR_DEFAULT;
+      const auto fg = is_selected ? colors::MENU_COLOR_HIGHLIGHT : colors::MENU_COLOR_DEFAULT;
       tcod::print(g_console, {menu_pos_.x, menu_pos_.y + i}, item.name, fg, tcod::ColorRGB{0, 0, 0});
     }
   }

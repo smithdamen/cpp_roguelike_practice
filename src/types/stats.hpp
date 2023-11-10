@@ -6,6 +6,8 @@
 struct Stats {
   int max_hp;
   int hp;
+  int max_mp;
+  int mp;
   int attack;
   int defense;
   int level = 1;

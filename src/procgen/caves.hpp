@@ -7,6 +7,7 @@
 
 #include "../actions/ai_basic.hpp"
 #include "../constants.hpp"
+#include "../symbols.hpp"
 #include "../fov.hpp"
 #include "../items/health_potion.hpp"
 #include "../items/scroll_confusion.hpp"
@@ -129,8 +130,8 @@ inline auto pop_random(VectorLike& list, RNG& rng) {
 }
 
 inline auto generate_level(World& world, int level = 1) -> Map& {
-  const int WIDTH = 80;
-  const int HEIGHT = 45;
+  const int WIDTH = constants::MAP_WIDTH;
+  const int HEIGHT = constants::MAP_HEIGHT;
   const auto map_id = MapID{"caves", level};
   if (auto found_map = world.maps.find(map_id); found_map != world.maps.end()) return found_map->second;
 
@@ -158,7 +159,7 @@ inline auto generate_level(World& world, int level = 1) -> Map& {
   });
 
   const auto up_stairs_pos = pop_random(floor_tiles, world.rng);
-  map.fixtures[up_stairs_pos] = Fixture{"up stairs", '<'};
+  map.fixtures[up_stairs_pos] = Fixture{"up stairs", symbols::UP_STAIR};
 
   auto& player = world.active_player();
   player.pos = up_stairs_pos;
@@ -178,12 +179,13 @@ inline auto generate_level(World& world, int level = 1) -> Map& {
       std::remove_if(floor_tiles.begin(), floor_tiles.end(), [&](Position pos) { return map.visible.at(pos); }),
       floor_tiles.end());
 
+  // this will need to be moved to its own file
   for (int repeats{0}; repeats < 20; ++repeats) {
     auto& [monster_id, monster] = *new_actor(world);
     monster.pos = pop_random(floor_tiles, world.rng);
     monster.name = "orc";
     monster.ch = 'o';
-    monster.fg = {63, 127, 63};
+    monster.fg = colors::ORC_FG;
     monster.stats.max_hp = monster.stats.hp = 10;
     monster.stats.attack = 3;
     monster.stats.xp = 35;
@@ -195,7 +197,7 @@ inline auto generate_level(World& world, int level = 1) -> Map& {
     monster.pos = pop_random(floor_tiles, world.rng);
     monster.name = "troll";
     monster.ch = 'T';
-    monster.fg = tcod::ColorRGB{0, 127, 0};
+    monster.fg = colors::TROLL_FG;
     monster.stats.max_hp = monster.stats.hp = 16;
     monster.stats.defense = 1;
     monster.stats.attack = 4;
@@ -204,7 +206,7 @@ inline auto generate_level(World& world, int level = 1) -> Map& {
     world.schedule.push_back(monster_id);
   }
 
-  map.fixtures[pop_random(floor_tiles, world.rng)] = Fixture{"down stairs", '>'};
+  map.fixtures[pop_random(floor_tiles, world.rng)] = Fixture{"down stairs", symbols::DOWN_STAIR};
 
   return map;
 }

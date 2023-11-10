@@ -5,6 +5,8 @@
 #include <fmt/format.h>
 
 #include "constants.hpp"
+#include "colors.hpp"
+#include "symbols.hpp"
 #include "globals.hpp"
 #include "world_logic.hpp"
 #include "xp.hpp"
@@ -15,8 +17,8 @@ inline void render_map(tcod::Console& console, const Map& map, bool show_all = f
       if (!console.in_bounds({x, y})) continue;
       if (!show_all && !map.explored.at({x, y})) continue;
       console.at({x, y}) = map.tiles.at({x, y}) == Tiles::floor
-                               ? TCOD_ConsoleTile{'.', constants::FLOOR_FG, constants::FLOOR_BG}
-                               : TCOD_ConsoleTile{'#', constants::WALL_FG, constants::WALL_BG};
+                               ? TCOD_ConsoleTile{symbols::FLOOR, colors::FLOOR_FG, colors::FLOOR_BG}
+                               : TCOD_ConsoleTile{symbols::WALL, colors::WALL_FG, colors::WALL_BG};
       if (!map.visible.at({x, y})) {
         console.at({x, y}).fg.r /= 2;
         console.at({x, y}).fg.g /= 2;
@@ -57,7 +59,7 @@ inline void render_map(tcod::Console& console, const World& world) {
     auto& cursor = *g_controller.cursor;
     if (console.in_bounds(cursor) && map.visible.in_bounds(cursor)) {
       auto& cursor_tile = console.at(cursor);
-      cursor_tile = {cursor_tile.ch, constants::BLACK, constants::WHITE};
+      cursor_tile = {cursor_tile.ch, colors::CURSOR_BG, colors::CURSOR_FG};
     }
   }
 }
@@ -104,7 +106,7 @@ inline void draw_bar(
     const tcod::ColorRGB fill_color,
     const tcod::ColorRGB back_color,
     std::string_view text = "",
-    const tcod::ColorRGB text_color = constants::TEXT_COLOR_DEFAULT,
+    const tcod::ColorRGB text_color = colors::TEXT_COLOR_DEFAULT,
     TCOD_alignment_t alignment = TCOD_LEFT) {
   const auto bar_width = std::clamp(static_cast<int>(std::round(width * filled)), 0, width);
   tcod::draw_rect(console, {x, y, width, height}, 0, {}, back_color);
@@ -139,7 +141,7 @@ inline void render_mouse_look(tcod::Console& console, const World& world) {
       console,
       {1, 0, console.get_width() - 1, 1},
       fmt::format("{}", fmt::join(cursor_desc, ", ")),
-      constants::TEXT_COLOR_DEFAULT,
+      colors::TEXT_COLOR_DEFAULT,
       {});
 }
 
@@ -147,6 +149,8 @@ inline void render_gui(tcod::Console& console, const World& world) {
   const auto& player = world.active_player();
   const int hp_x = constants::HP_BAR_X;
   const int hp_y = constants::HP_BAR_Y;
+  const int mp_x = constants::MP_BAR_X;
+  const int mp_y = constants::MP_BAR_Y;
   const int xp_x = constants::XP_BAR_X;
   const int xp_y = constants::XP_BAR_Y;
   const int bar_width = constants::BAR_WIDTH;
@@ -164,6 +168,20 @@ inline void render_gui(tcod::Console& console, const World& world) {
       constants::HP_BAR_BACK,
       fmt::format(" HP: {}/{}", player.stats.hp, player.stats.max_hp));
 
+  // mp bar
+  draw_bar(
+      console,
+      mp_x,
+      mp_y,
+      bar_width,
+      bar_height,
+      static_cast<float>(player.stats.mp) / player.stats.max_mp,
+      colors::MP_BAR_FILL,
+      colors::MP_BAR_BACK,
+      fmt::format(" MP: {}", player.stats.mp, player.stats.max_mp));
+  render_log(console, world);
+  render_mouse_look(console, world);
+
   // experience bar
   draw_bar(
       console,
@@ -172,8 +190,8 @@ inline void render_gui(tcod::Console& console, const World& world) {
       bar_width,
       bar_height,
       static_cast<float>(player.stats.xp) / next_level_xp(player.stats.level),
-      constants::XP_BAR_FILL,
-      constants::XP_BAR_BACK,
+      colors::XP_BAR_FILL,
+      colors::XP_BAR_BACK,
       fmt::format(" XP: {}", player.stats.xp));
   render_log(console, world);
   render_mouse_look(console, world);
