@@ -7,7 +7,7 @@ if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
 endif()
 
 project(
-    tcod-engine-2022  # Project name, change this as needed.
+    cpp_roguelike_practice  # Project name, change this as needed.
     LANGUAGES C CXX
 )
 
