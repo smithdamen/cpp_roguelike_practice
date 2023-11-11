@@ -13,5 +13,5 @@ struct Stats {
   int level = 1;
   int xp = 0;
   std::vector<std::unique_ptr<Item>> inventory;
-  int confused_turns = 0;
+  int confused_turns = 0; // move this to some kind of status effects class
 };

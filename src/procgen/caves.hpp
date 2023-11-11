@@ -179,7 +179,7 @@ inline auto generate_level(World& world, int level = 1) -> Map& {
       std::remove_if(floor_tiles.begin(), floor_tiles.end(), [&](Position pos) { return map.visible.at(pos); }),
       floor_tiles.end());
 
-  // this will need to be moved to its own file
+  // this will need to be moved to its own file in enemies.hpp
   for (int repeats{0}; repeats < 20; ++repeats) {
     auto& [monster_id, monster] = *new_actor(world);
     monster.pos = pop_random(floor_tiles, world.rng);

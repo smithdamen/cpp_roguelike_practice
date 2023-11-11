@@ -125,3 +125,6 @@ build
 *.sav
 save.json
 saves/
+
+# My files
+TODO.md
