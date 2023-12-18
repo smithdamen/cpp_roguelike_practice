@@ -15,11 +15,13 @@
 #include "../symbols.hpp"
 
 struct Orc {
+  Actor oneActor;
   ActorID id;
   Actor.name = "orc";
   Actor.ch = symbols::ORC;
   Actor.fg = colors::ORC_FG;
   Actor.stats.max_hp = monster.stats.hp = 10;
+  Actor.stats.defense = 1;
   Actor.stats.attack = 3;
   Actor.stats.xp = 35;
   Actor.ai = std::make_unique<action::BasicAI>();
